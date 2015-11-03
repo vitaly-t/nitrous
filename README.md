@@ -1,6 +1,5 @@
 # Nitrous
 
-This project is an initial Promise/A+ implementation.
+This is my take at implementing a Promise/A+ library.
 
-Not yet for public consumption :)
-
+The project is in its early stage, not ready for public consumption.
