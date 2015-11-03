@@ -1,5 +1,6 @@
-# Promise
+# Nitrous
 
-This is a playground for experiments with promises, and not for public consumption.
+This project is an initial Promise/A+ implementation.
 
-Not yet :)
+Not yet for public consumption :)
+
