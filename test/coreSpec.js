@@ -1,5 +1,4 @@
 var promise = require('../lib/index');
-//var promise = require('bluebird');
 
 function dummy() {
 }
@@ -77,42 +76,32 @@ describe("CORE - negative", function () {
             expect(result).toBe("123");
         });
     });
-/*
-    describe("nesting promises", function () {
-        describe("rejecting", function () {
-            var result;
-            beforeEach(function (done) {
-                promise.reject(promise.reject("nested"))
-                    .catch(function (error) {
-                        result = error;
-                        done();
-                    });
-            });
-            it("must reject with correct value", function () {
-                expect(result).toBe("nested");
-            });
+
+    describe("exceptions", function () {
+        var result;
+        beforeEach(function (done) {
+            promise.resolve("1")
+                .then(function (data) {
+                    throw data + "2";
+                })
+                .catch(function (error) {
+                    return promise.resolve(error + "3");
+                })
+                .then(function (data) {
+                    return promise.reject(data + "4");
+                })
+                .catch(function (error) {
+                    throw error + "5";
+                })
+                .catch(function (error) {
+                    result = error + "6";
+                    done();
+                });
+        });
+        it("must be handled everywhere", function () {
+            expect(result).toBe("123456");
         });
     });
-*/
-
-/*
-    describe("deep-nesting promises", function () {
-        describe("rejecting", function () {
-            var result;
-            beforeEach(function (done) {
-                promise.reject(promise.reject(promise.reject(promise.reject(promise.reject("nested")))))
-                    .catch(function (error) {
-                        result = error;
-                        done();
-                    });
-            });
-            it("must reject with correct value", function () {
-                expect(result).toBe("nested");
-            });
-        });
-    });
-*/
-
 });
 
 describe("CORE - positive", function () {
