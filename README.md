@@ -23,3 +23,4 @@ Testing with coverage:
 ```
 $ npm run coverage
 ```
+The coverage report file is `coverage/lcov-report/index.html`
