@@ -1,9 +1,11 @@
 # Nitrous
 
+Performance Promise Library
+
 [![Build Status](https://travis-ci.org/vitaly-t/nitrous.svg?branch=master)](https://travis-ci.org/vitaly-t/nitrous)
 [![Coverage Status](https://coveralls.io/repos/vitaly-t/nitrous/badge.svg?branch=master)](https://coveralls.io/r/vitaly-t/nitrous?branch=master)
 
-**This promise library is under development, not ready for public consumption.**
+**This library is under development, not ready for public consumption.**
 
 ### Installing
 
