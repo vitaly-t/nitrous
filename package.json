@@ -33,7 +33,6 @@
   },
   "devDependencies": {
     "coveralls": "2.x",
-    "grunt": "0.4.x",
     "istanbul": "0.4",
     "jasmine-node": "1.x"
   }

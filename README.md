@@ -1,5 +1,23 @@
 # Nitrous
 
-This is my take at implementing a Promise/A+ library.
+[![Build Status](https://travis-ci.org/vitaly-t/nitrous.svg?branch=master)](https://travis-ci.org/vitaly-t/nitrous)
+[![Coverage Status](https://coveralls.io/repos/vitaly-t/nitrous/badge.svg?branch=master)](https://coveralls.io/r/vitaly-t/nitrous?branch=master)
 
-The project is in its early stage of development, not ready for public consumption.
+**This promise library is in its early stage of development, not ready for public consumption.**
+
+### Installing
+
+```
+$ npm install nitrous
+```
+
+### Testing
+
+```
+$ npm test
+```
+
+Testing with coverage:
+```
+$ npm run coverage
+```

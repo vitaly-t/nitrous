@@ -1,4 +1,5 @@
 var promise = require('../lib/index');
+//var promise = require('bluebird');
 
 function dummy() {
 }
@@ -7,19 +8,31 @@ describe("CORE", function () {
 
     describe("initialization - negative", function () {
 
-        function initError(param) {
-            return "Promise resolver " + param + " is not a function";
-        }
+        describe("invalid 'this' context", function () {
 
-        it("must throw on invalid construction", function () {
-            var values = [undefined, null, 0, 123, true];
-            values.forEach(function (v) {
-                {
-                    expect(function () {
-                        new Promise(v);
-                    }).toThrow(initError(v));
-                }
+            it("must throw an error", function () {
+                expect(function () {
+                    promise(dummy);
+                }).toThrow("Failed to construct 'Promise': Please use the 'new' operator, this object constructor cannot be called as a function.");
             });
+        });
+
+        describe("invalid input parameter", function () {
+            function initError(param) {
+                return "Promise resolver " + param + " is not a function";
+            }
+
+            it("must throw on invalid construction", function () {
+                var values = [undefined, null, 0, 123, true];
+                values.forEach(function (v) {
+                    {
+                        expect(function () {
+                            new promise(v);
+                        }).toThrow(initError(v));
+                    }
+                });
+            });
+
         });
 
     });
