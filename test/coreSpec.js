@@ -102,6 +102,25 @@ describe("CORE - negative", function () {
             expect(result).toBe("123456");
         });
     });
+
+    describe("throw in constructor", function () {
+        var result;
+        beforeEach(function (done) {
+            new promise(function () {
+                throw "ops!";
+            })
+                .catch(function (data) {
+                    result = data;
+                    done();
+                });
+        });
+
+        it("must reject correctly", function () {
+            expect(result).toBe("ops!");
+        });
+
+    });
+
 });
 
 describe("CORE - positive", function () {
