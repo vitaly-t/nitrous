@@ -1,6 +1,6 @@
 var promise = require('../lib/index');
 
-describe(".ALL", function () {
+describe(".ALL - negative", function () {
 
     describe("invalid input parameter", function () {
 
@@ -14,8 +14,25 @@ describe(".ALL", function () {
                 }
             });
         });
-
     });
+
+    describe("normal reject", function () {
+        var result;
+        beforeEach(function (done) {
+            promise.all([1, 2, promise.reject(3)])
+                .catch(function (error) {
+                    result = error;
+                    done();
+                });
+        });
+        it("must reject with correct value", function () {
+            expect(result).toBe(3);
+        });
+    });
+
+});
+
+describe(".ALL - positive", function () {
 
     describe("empty input", function () {
         var result;
@@ -29,7 +46,7 @@ describe(".ALL", function () {
         it("must resolve with empty result", function () {
             expect(result).toEqual([]);
         });
-    })
+    });
 
     describe("simple values input", function () {
         var result;
@@ -43,7 +60,7 @@ describe(".ALL", function () {
         it("must resolve with simple values", function () {
             expect(result).toEqual([1, 2, 3]);
         });
-    })
+    });
 
     describe("promise values input", function () {
         var result;
@@ -57,5 +74,5 @@ describe(".ALL", function () {
         it("must resolve with the resolved values", function () {
             expect(result).toEqual([1, 2, 3]);
         });
-    })
+    });
 });

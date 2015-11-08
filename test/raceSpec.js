@@ -1,6 +1,6 @@
 var promise = require('../lib/index');
 
-describe(".RACE", function () {
+describe(".RACE - negative", function () {
 
     describe("invalid input parameter", function () {
 
@@ -17,6 +17,10 @@ describe(".RACE", function () {
 
     });
 
+});
+
+describe(".RACE - positive", function () {
+
     describe("simple values input", function () {
         var result;
         beforeEach(function (done) {
@@ -29,7 +33,7 @@ describe(".RACE", function () {
         it("must resolve with the first value", function () {
             expect(result).toBe(1);
         });
-    })
+    });
 
     describe("promise values input", function () {
         var result;
@@ -43,6 +47,7 @@ describe(".RACE", function () {
         it("must resolve with the first resolved value", function () {
             expect(result).toBe(1);
         });
-    })
+    });
 
 });
+

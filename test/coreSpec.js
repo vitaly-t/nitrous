@@ -4,9 +4,9 @@ var promise = require('../lib/index');
 function dummy() {
 }
 
-describe("CORE", function () {
+describe("CORE - negative", function () {
 
-    describe("initialization - negative", function () {
+    describe("initialization", function () {
 
         describe("invalid 'this' context", function () {
 
@@ -36,6 +36,86 @@ describe("CORE", function () {
         });
 
     });
+
+    describe("1-level reject", function () {
+        var result;
+        beforeEach(function (done) {
+            new promise(function (_, reject) {
+                reject("failure");
+            })
+                .then(dummy, function (reason) {
+                    result = reason;
+                    done();
+                });
+        });
+
+        it("must reject with the value passed", function () {
+            expect(result).toBe("failure");
+        });
+
+    });
+
+    describe("n-level reject", function () {
+        var result;
+        beforeEach(function (done) {
+            new promise(function (_, reject) {
+                reject("1");
+            })
+                .then(dummy, function (reason) {
+                    return promise.reject(reason + "2");
+                })
+                .then(dummy, function (reason) {
+                    return promise.reject(reason + "3");
+                })
+                .then(dummy, function (reason) {
+                    result = reason;
+                    done();
+                });
+        });
+
+        it("must reject with the chain value", function () {
+            expect(result).toBe("123");
+        });
+    });
+/*
+    describe("nesting promises", function () {
+        describe("rejecting", function () {
+            var result;
+            beforeEach(function (done) {
+                promise.reject(promise.reject("nested"))
+                    .catch(function (error) {
+                        result = error;
+                        done();
+                    });
+            });
+            it("must reject with correct value", function () {
+                expect(result).toBe("nested");
+            });
+        });
+    });
+*/
+
+/*
+    describe("deep-nesting promises", function () {
+        describe("rejecting", function () {
+            var result;
+            beforeEach(function (done) {
+                promise.reject(promise.reject(promise.reject(promise.reject(promise.reject("nested")))))
+                    .catch(function (error) {
+                        result = error;
+                        done();
+                    });
+            });
+            it("must reject with correct value", function () {
+                expect(result).toBe("nested");
+            });
+        });
+    });
+*/
+
+});
+
+describe("CORE - positive", function () {
 
     describe("1-level resolve", function () {
         var result;
@@ -80,48 +160,40 @@ describe("CORE", function () {
 
     });
 
-    describe("1-level reject", function () {
-        var result;
-        beforeEach(function (done) {
-            new promise(function (_, reject) {
-                reject("failure");
-            })
-                .then(dummy, function (reason) {
-                    result = reason;
-                    done();
-                });
+    describe("nesting promises", function () {
+        describe("resolving", function () {
+            var result;
+            beforeEach(function (done) {
+                promise.resolve(promise.resolve("nested"))
+                    .then(function (data) {
+                        result = data;
+                        done();
+                    });
+            });
+            it("must resolve with correct value", function () {
+                expect(result).toBe("nested");
+            });
         });
-
-        it("must reject with the value passed", function () {
-            expect(result).toBe("failure");
-        });
-
     });
 
-    describe("n-level reject", function () {
-        var result;
-        beforeEach(function (done) {
-            new promise(function (_, reject) {
-                reject("1");
-            })
-                .then(dummy, function (reason) {
-                    return promise.reject(reason + "2");
-                })
-                .then(dummy, function (reason) {
-                    return promise.reject(reason + "3");
-                })
-                .then(dummy, function (reason) {
-                    result = reason;
-                    done();
-                });
+    describe("deep-nesting promises", function () {
+        describe("resolving", function () {
+            var result;
+            beforeEach(function (done) {
+                promise.resolve(promise.resolve(promise.resolve(promise.resolve(promise.resolve("nested")))))
+                    .then(function (data) {
+                        result = data;
+                        done();
+                    });
+            });
+            it("must resolve with correct value", function () {
+                expect(result).toBe("nested");
+            });
         });
-
-        it("must reject with the chain value", function () {
-            expect(result).toBe("123");
-        });
-
     });
+});
 
+describe("CORE - mixed", function () {
 
     describe("n-level mixed", function () {
         var result;
@@ -150,7 +222,6 @@ describe("CORE", function () {
         });
 
     });
-
 });
 
 describe(".CATCH", function () {
