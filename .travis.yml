@@ -11,4 +11,3 @@ branches:
     - master
 env:
   - NODE_ENV=development
-
