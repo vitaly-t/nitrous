@@ -121,6 +121,26 @@ describe("CORE - negative", function () {
 
     });
 
+    describe("invalid .then", function () {
+        var result;
+        beforeEach(function (done) {
+            var p = promise.reject("original");
+            p.catch(function () {
+                    return p;
+                })
+                .then(function () {
+                    return "failed"; // this line is not to be executed;
+                })
+                .catch(function (error) {
+                    result = error;
+                    done();
+                });
+        });
+        it("must skip .then callback", function () {
+            expect(result).toBe("original");
+        });
+    });
+
 });
 
 describe("CORE - positive", function () {
@@ -230,6 +250,24 @@ describe("CORE - mixed", function () {
         });
 
     });
+
+    describe("repeated resolve", function () {
+        var result;
+        beforeEach(function (done) {
+            var p = promise.resolve("original");
+            p.then(function () {
+                    return p;
+                })
+                .then(function (data) {
+                    result = data;
+                    done();
+                });
+        });
+        it("must resolve correctly", function () {
+            expect(result).toBe("original");
+        });
+    });
+
 });
 
 describe(".CATCH", function () {
