@@ -9,5 +9,6 @@ script:
 branches:
   only:
     - master
+    - /^greenkeeper/.*$/
 env:
   - NODE_ENV=development
